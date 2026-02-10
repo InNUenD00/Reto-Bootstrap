@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIU - Sistema de Inscripcion Universitaria v1.0</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!-- Header -->
+<div class="bg-primary text-white py-3" data-bs-theme="dark">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-3">
+        <h4 class="mb-0"><strong>SIU-WEB</strong></h4>
+      </div>
+      <div class="col-md-6 text-center">
+        <h5 class="mb-0">SISTEMA ACADEMICO DOCENTE</h5>
+      </div>
+      <div class="col-md-3 text-end">
+        <small>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+          </svg>
+          Usuario: Ing. A. Cisneros | Período: 2026-I
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-info text-left mb-4"><strong>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-align-bottom" viewBox="0 0 16 16">
+      <rect width="4" height="12" x="6" y="1" rx="1"/>
+      <path d="M1.5 14a.5.5 0 0 0 0 1zm13 1a.5.5 0 0 0 0-1zm-13 0h13v-1h-13z"/>
+      </svg>REPORTE OFICIAL DE HORARIOS</strong>
+      </h3>
+      
+      <div class="d-flex justify-content-end gap-2 mb-4">
+        <button class="btn btn-primary" onclick="window.print()">IMPRIMIR REPORTE</button>
+        <button class="btn btn-success">EXPORTAR A EXCEL</button>
+        <button class="btn btn-danger">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-xbox" viewBox="0 0 16 16">
+        <path d="M7.202 15.967a8 8 0 0 1-3.552-1.26c-.898-.585-1.101-.826-1.101-1.306 0-.965 1.062-2.656 2.879-4.583C6.459 7.723 7.897 6.44 8.052 6.475c.302.068 2.718 2.423 3.622 3.531 1.43 1.753 2.088 3.189 1.754 3.829-.254.486-1.83 1.437-2.987 1.802-.954.301-2.207.429-3.239.33m-5.866-3.57C.589 11.253.212 10.127.03 8.497c-.06-.539-.038-.846.137-1.95.218-1.377 1.002-2.97 1.945-3.95.401-.417.437-.427.926-.263.595.2 1.23.638 2.213 1.528l.574.519-.313.385C4.056 6.553 2.52 9.086 1.94 10.653c-.315.852-.442 1.707-.306 2.063.091.24.007.15-.3-.319Zm13.101.195c.074-.36-.019-1.02-.238-1.687-.473-1.443-2.055-4.128-3.508-5.953l-.457-.575.494-.454c.646-.593 1.095-.948 1.58-1.25.381-.237.927-.448 1.161-.448.145 0 .654.528 1.065 1.104a8.4 8.4 0 0 1 1.343 3.102c.153.728.166 2.286.024 3.012a9.5 9.5 0 0 1-.6 1.893c-.179.393-.624 1.156-.82 1.404-.1.128-.1.127-.043-.148ZM7.335 1.952c-.67-.34-1.704-.705-2.276-.803a4 4 0 0 0-.759-.043c-.471.024-.45 0 .306-.358A7.8 7.8 0 0 1 6.47.128c.8-.169 2.306-.17 3.094-.005.85.18 1.853.552 2.418.9l.168.103-.385-.02c-.766-.038-1.88.27-3.078.853-.361.176-.676.316-.699.312a12 12 0 0 1-.654-.319Z"/>
+        </svg>
+        Salir
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover table-striped text-center">
+          <thead class="table-dark">
+            <tr>
+              <th style="width: 10%;">CODIGO</th>
+              <th style="width: 30%;">ASIGNATURA</th>
+              <th style="width: 10%;">GRUPO</th>
+              <th style="width: 15%;">DIA</th>
+              <th style="width: 20%;">HORARIO</th>
+              <th style="width: 15%;">AULA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0413</td>
+              <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
+              <td>Gpo1</td>
+              <td>MARTES</td>
+              <td>10:00 - 11:40</td>
+              <td>E201</td>
+            </tr>
+
+            <tr class="table-light">
+              <td>0413</td>
+              <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
+              <td>Gpo1</td>
+              <td>JUEVES</td>
+              <td>15:00 - 16:40</td>
+              <td>E201</td>
+            </tr>
+
+            <tr>
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo3</td>
+              <td>LUNES</td>
+              <td>08:00 - 09:40</td>
+              <td>D104</td>
+            </tr>
+            
+            <tr class="table-light">
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo3</td>
+              <td>MIERCOLES</td>
+              <td>08:00 - 09:40</td>
+              <td>D104</td>
+            </tr>
+
+            <tr>
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo4</td>
+              <td>LUNES</td>
+              <td>10:00 - 11:40</td>
+              <td>E201</td>
+            </tr>
+            
+            <tr class="table-light">
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo4</td>
+              <td>JUEVES</td>
+              <td>08:00 - 09:40</td>
+              <td>E201</td>
+            </tr>
+
+            <tr>
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo7</td>
+              <td>LUNES</td>
+              <td>03:00 - 04:40</td>
+              <td>D104</td>
+            </tr>
+            
+            <tr class="table-light">
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo7</td>
+              <td>JUEVES</td>
+              <td>01:00 - 02:40</td>
+              <td>D104</td>
+            </tr>
+
+            <tr>
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo8</td>
+              <td>MARTES</td>
+              <td>03:00 - 04:40</td>
+              <td>D104</td>
+            </tr>
+            
+            <tr class="table-light">
+              <td>0402</td>
+              <td>INTRO. INGENIERIA</td>
+              <td>Gpo8</td>
+              <td>MIERCOLES</td>
+              <td>01:00 - 02:40</td>
+              <td>D104</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <hr>
+      <div class="text-center mt-4">
+        <small class="text-muted">Sistema de Gestión Académica - Derechos Reservados 1999-2005</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
