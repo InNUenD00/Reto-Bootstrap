@@ -13,7 +13,7 @@
     padding: 4px;
   }
   .hour-cell {
-    min-width: 90px;
+    min-width: 110px;
     font-weight: bold;
     background-color: #343a40;
     color: white;
@@ -49,6 +49,7 @@
 </head>
 <body class="bg-light">
 
+<!-- Header -->
 <div class="bg-primary text-white py-3" data-bs-theme="dark">
   <div class="container-fluid">
     <div class="row align-items-center">
@@ -80,8 +81,8 @@
       <path d="M1.5 14a.5.5 0 0 0 0 1zm13 1a.5.5 0 0 0 0-1zm-13 0h13v-1h-13z"/>
       </svg> REPORTE OFICIAL DE HORARIOS</strong>
       </h3>
-
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <!-- Toggle de vistas -->
         <div class="btn-group" role="group" aria-label="Cambiar vista">
           <button id="btn-lista" class="btn btn-secondary btn-toggle active-view" onclick="mostrarVista('lista')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table me-1" viewBox="0 0 16 16">
@@ -97,9 +98,8 @@
             Calendario
           </button>
         </div>
-
         <div class="d-flex gap-2">
-          <button class="btn btn-danger" onclick="window.print()">IMPRIMIR REPORTE</button>
+          <button class="btn btn-primary" onclick="window.print()">IMPRIMIR REPORTE</button>
           <button class="btn btn-success" onclick="exportarExcel()">EXPORTAR A EXCEL</button>
         </div>
       </div>
@@ -116,87 +116,7 @@
                 <th style="width: 15%;">AULA</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>0413</td>
-                <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
-                <td>Gpo1</td>
-                <td>MARTES</td>
-                <td>10:00 - 11:40</td>
-                <td>E201</td>
-              </tr>
-              <tr class="table-light">
-                <td>0413</td>
-                <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
-                <td>Gpo1</td>
-                <td>JUEVES</td>
-                <td>15:00 - 16:40</td>
-                <td>E201</td>
-              </tr>
-              <tr>
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo3</td>
-                <td>LUNES</td>
-                <td>08:00 - 09:40</td>
-                <td>D104</td>
-              </tr>
-              <tr class="table-light">
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo3</td>
-                <td>MIERCOLES</td>
-                <td>08:00 - 09:40</td>
-                <td>D104</td>
-              </tr>
-              <tr>
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo4</td>
-                <td>LUNES</td>
-                <td>10:00 - 11:40</td>
-                <td>E201</td>
-              </tr>
-              <tr class="table-light">
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo4</td>
-                <td>JUEVES</td>
-                <td>08:00 - 09:40</td>
-                <td>E201</td>
-              </tr>
-              <tr>
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo7</td>
-                <td>LUNES</td>
-                <td>03:00 - 04:40</td>
-                <td>D104</td>
-              </tr>
-              <tr class="table-light">
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo7</td>
-                <td>JUEVES</td>
-                <td>01:00 - 02:40</td>
-                <td>D104</td>
-              </tr>
-              <tr>
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo8</td>
-                <td>MARTES</td>
-                <td>03:00 - 04:40</td>
-                <td>D104</td>
-              </tr>
-              <tr class="table-light">
-                <td>0402</td>
-                <td>INTRO. INGENIERIA</td>
-                <td>Gpo8</td>
-                <td>MIERCOLES</td>
-                <td>01:00 - 02:40</td>
-                <td>D104</td>
-              </tr>
+            <tbody id="tbody-lista">
             </tbody>
           </table>
         </div>
@@ -220,23 +140,53 @@
 <script>
 
   const materias = [
-    { codigo: "0413", nombre: "PROGRAMACION WEB",   grupo: "Gpo1", dia: "MARTES",    horaInicio: 10, aula: "E201", color: "bg-info text-dark" },
-    { codigo: "0413", nombre: "PROGRAMACION WEB",   grupo: "Gpo1", dia: "JUEVES",    horaInicio: 15, aula: "E201", color: "bg-info text-dark" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo3", dia: "LUNES",     horaInicio: 8,  aula: "D104", color: "bg-success text-white" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo3", dia: "MIERCOLES", horaInicio: 8,  aula: "D104", color: "bg-success text-white" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo4", dia: "LUNES",     horaInicio: 10, aula: "E201", color: "bg-warning text-dark" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo4", dia: "JUEVES",    horaInicio: 8,  aula: "E201", color: "bg-warning text-dark" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo7", dia: "LUNES",     horaInicio: 3,  aula: "D104", color: "bg-danger text-white" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo7", dia: "JUEVES",    horaInicio: 1,  aula: "D104", color: "bg-danger text-white" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo8", dia: "MARTES",    horaInicio: 3,  aula: "D104", color: "bg-secondary text-white" },
-    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo8", dia: "MIERCOLES", horaInicio: 1,  aula: "D104", color: "bg-secondary text-white" },
+    { codigo: "0413", nombre: "PROGRAMACION WEB",  grupo: "Gpo1", dia: "MARTES",    horaInicio: 10, aula: "E201", color: "bg-info text-dark" },
+    { codigo: "0413", nombre: "PROGRAMACION WEB",  grupo: "Gpo1", dia: "JUEVES",    horaInicio: 15, aula: "E201", color: "bg-info text-dark" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "LUNES",     horaInicio: 8,  aula: "D105", color: "bg-success text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "MIERCOLES", horaInicio: 8,  aula: "D105", color: "bg-success text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "LUNES",     horaInicio: 10, aula: "E202", color: "bg-warning text-dark" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "JUEVES",    horaInicio: 8,  aula: "E202", color: "bg-warning text-dark" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "LUNES",     horaInicio: 15, aula: "D105", color: "bg-danger text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "JUEVES",    horaInicio: 13, aula: "D105", color: "bg-danger text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MARTES",    horaInicio: 15, aula: "D105", color: "bg-secondary text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MIERCOLES", horaInicio: 13, aula: "D105", color: "bg-secondary text-white" },
   ];
 
-  const dias = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES"];
+  function hora12(h) {
+    const sufijo = h >= 12 ? "PM" : "AM";
+    const h12 = h % 12 === 0 ? 12 : h % 12;
+    return h12 + ":00 " + sufijo;
+  }
 
-  const todasHoras = materias.map(m => m.horaInicio);
-  const horaMin = Math.min(...todasHoras);
-  const horaMax = Math.max(...todasHoras) + 2;
+  function horarioCompleto(h) {
+    const sufijo     = h >= 12 ? "PM" : "AM";
+    const h12        = h % 12 === 0 ? 12 : h % 12;
+    const hFin       = h + 1;
+    const sufijoFin  = hFin >= 12 ? "PM" : "AM";
+    const hFin12     = hFin % 12 === 0 ? 12 : hFin % 12;
+    return h12 + ":00 " + sufijo + " - " + hFin12 + ":40 " + sufijoFin;
+  }
+
+  function renderizarLista() {
+    const tbody = document.getElementById("tbody-lista");
+    tbody.innerHTML = "";
+    materias.forEach((m, i) => {
+      const tr = document.createElement("tr");
+      if (i % 2 !== 0) tr.className = "table-light";
+      tr.innerHTML =
+        "<td>" + m.codigo + "</td>" +
+        "<td class='text-info'><strong>" + m.nombre + "</strong></td>" +
+        "<td>" + m.grupo + "</td>" +
+        "<td>" + m.dia + "</td>" +
+        "<td>" + horarioCompleto(m.horaInicio) + "</td>" +
+        "<td>" + m.aula + "</td>";
+      tbody.appendChild(tr);
+    });
+  }
+
+  const dias   = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES"];
+  const horaMin = 8; 
+  const horaMax = 17;  
 
   function renderizarCalendario() {
     const tabla = document.getElementById("tabla-calendario");
@@ -261,32 +211,55 @@
 
     const tbody = document.createElement("tbody");
 
+    const skipped = {};
+    for (let h = horaMin; h <= horaMax; h++) skipped[h] = {};
+
     for (let hora = horaMin; hora <= horaMax; hora++) {
       const fila = document.createElement("tr");
 
       const tdHora = document.createElement("td");
       tdHora.className = "hour-cell";
-      const horaFmt = hora.toString().padStart(2, "0") + ":00";
-      tdHora.textContent = horaFmt;
+      tdHora.textContent = hora12(hora);
       fila.appendChild(tdHora);
 
       for (let d = 0; d < dias.length; d++) {
+
+        if (skipped[hora][d]) continue;
+
         const tdDia = document.createElement("td");
         tdDia.className = "calendar-cell";
         tdDia.style.backgroundColor = "#f8f9fa";
+        tdDia.style.verticalAlign = "middle";
 
+        let tieneMateria = false;
         for (let m = 0; m < materias.length; m++) {
           const mat = materias[m];
           if (mat.dia === dias[d] && mat.horaInicio === hora) {
-            const badge = document.createElement("span");
-            badge.className = "materia-badge " + mat.color;
-            badge.innerHTML =
+            tieneMateria = true;
+
+            tdDia.rowSpan = 2;
+            tdDia.style.backgroundColor = "";
+            tdDia.style.padding = "6px";
+
+            if (skipped[hora + 1]) skipped[hora + 1][d] = true;
+
+            const bloque = document.createElement("div");
+            bloque.className = mat.color;
+            bloque.style.cssText =
+              "border-radius:6px; padding:8px 6px; font-size:0.75rem;" +
+              "line-height:1.4; height:100%; display:flex; flex-direction:column;" +
+              "justify-content:center; align-items:center; text-align:center;";
+            bloque.innerHTML =
               "<strong>" + mat.nombre + "</strong><br>" +
               mat.grupo + " | " + mat.aula + "<br>" +
-              hora.toString().padStart(2,"0") + ":00 - " +
-              (hora + 1).toString().padStart(2,"0") + ":40";
-            tdDia.appendChild(badge);
+              horarioCompleto(mat.horaInicio);
+            tdDia.appendChild(bloque);
+            break;
           }
+        }
+
+        if (!tieneMateria) {
+          tdDia.style.backgroundColor = "#f8f9fa";
         }
 
         fila.appendChild(tdDia);
@@ -301,18 +274,12 @@
   function exportarExcel() {
     const encabezados = ["CODIGO", "ASIGNATURA", "GRUPO", "DIA", "HORARIO", "AULA"];
 
-    function fmtHora(h) {
-      const sufijo = h >= 12 ? "PM" : "AM";
-      const h12 = h % 12 === 0 ? 12 : h % 12;
-      return h12 + ":00 " + sufijo + " - " + (h12 + 1) + ":40 " + sufijo;
-    }
-
     const filas = materias.map(m => [
       m.codigo,
       m.nombre,
       m.grupo,
       m.dia,
-      fmtHora(m.horaInicio),
+      horarioCompleto(m.horaInicio),
       m.aula
     ]);
 
@@ -320,12 +287,12 @@
     const ws = XLSX.utils.aoa_to_sheet(wsData);
 
     ws["!cols"] = [
-      { wch: 10 },  // CODIGO
-      { wch: 25 },  // ASIGNATURA
-      { wch: 8  },  // GRUPO
-      { wch: 12 },  // DIA
-      { wch: 22 },  // HORARIO
-      { wch: 8  },  // AULA
+      { wch: 10 },
+      { wch: 25 },
+      { wch: 8  },
+      { wch: 12 },
+      { wch: 26 },
+      { wch: 8  },
     ];
 
     const rangoEncabezado = XLSX.utils.decode_range(ws["!ref"]);
@@ -367,7 +334,6 @@
     XLSX.writeFile(wb, "Reporte_Horarios_SIU.xlsx", { bookType: "xlsx", cellStyles: true });
   }
 
-
   function mostrarVista(vista) {
     const listaDiv      = document.getElementById("vista-lista");
     const calendarioDiv = document.getElementById("vista-calendario");
@@ -387,6 +353,7 @@
       renderizarCalendario();
     }
   }
+  renderizarLista();
 </script>
 </body>
 </html>
