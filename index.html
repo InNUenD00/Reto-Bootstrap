@@ -5,10 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SIU - Sistema de Inscripcion Universitaria v1.0</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  .calendar-cell {
+    min-width: 130px;
+    min-height: 60px;
+    vertical-align: top;
+    padding: 4px;
+  }
+  .hour-cell {
+    min-width: 90px;
+    font-weight: bold;
+    background-color: #343a40;
+    color: white;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .day-header {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+  }
+  .materia-badge {
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-size: 0.72rem;
+    margin-bottom: 2px;
+    display: block;
+    line-height: 1.3;
+  }
+  .btn-toggle.active-view {
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.6);
+  }
+  #vista-calendario table {
+    border-collapse: collapse;
+  }
+  #vista-calendario td, #vista-calendario th {
+    border: 1px solid #dee2e6;
+  }
+</style>
 </head>
 <body class="bg-light">
 
-<!-- Header --> 
+<!-- Header -->
 <div class="bg-primary text-white py-3" data-bs-theme="dark">
   <div class="container-fluid">
     <div class="row align-items-center">
@@ -38,133 +79,142 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-align-bottom" viewBox="0 0 16 16">
       <rect width="4" height="12" x="6" y="1" rx="1"/>
       <path d="M1.5 14a.5.5 0 0 0 0 1zm13 1a.5.5 0 0 0 0-1zm-13 0h13v-1h-13z"/>
-      </svg>REPORTE OFICIAL DE HORARIOS</strong>
+      </svg> REPORTE OFICIAL DE HORARIOS</strong>
       </h3>
 
-      <div class="d-flex justify-content-between mb-4">
-        <div>
-          <button id="btnLista" class="btn btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg>
-            Ver Lista
+      <!-- Botones de acción + Toggle -->
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <!-- Toggle de vistas -->
+        <div class="btn-group" role="group" aria-label="Cambiar vista">
+          <button id="btn-lista" class="btn btn-secondary btn-toggle active-view" onclick="mostrarVista('lista')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table me-1" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 2h-4v3h4zm0 4h-4v3h4zm0 4h-4v3h3a1 1 0 0 0 1-1zm-5 3v-3H6v3zm-5 0v-3H1v2a1 1 0 0 0 1 1zm-4-4h4V8H1zm0-4h4V4H1zm5-3v3h4V4zm4 4H6v3h4z"/>
+            </svg>
+            Lista
           </button>
-          <button id="btnCalendario" class="btn btn-outline-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16"><path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/><path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg>
-            Ver Calendario
+          <button id="btn-calendario" class="btn btn-secondary btn-toggle" onclick="mostrarVista('calendario')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3 me-1" viewBox="0 0 16 16">
+              <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+              <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+            </svg>
+            Calendario
           </button>
         </div>
 
+        <!-- Botones de acción -->
         <div class="d-flex gap-2">
-            <button class="btn btn-danger" onclick="window.print()">IMPRIMIR</button>
-            <button class="btn btn-success">EXPORTAR A EXCEL</button>
+          <button class="btn btn-danger" onclick="window.print()">IMPRIMIR</button>
+          <button class="btn btn-success" onclick="exportarExcel()">EXPORTAR A EXCEL</button>
         </div>
       </div>
 
-      <div class="table-responsive">
-        <table class="table table-hover table-striped text-center">
-          <thead class="table-dark">
-            <tr>
-              <th style="width: 10%;">CODIGO</th>
-              <th style="width: 30%;">ASIGNATURA</th>
-              <th style="width: 10%;">GRUPO</th>
-              <th style="width: 15%;">DIA</th>
-              <th style="width: 20%;">HORARIO</th>
-              <th style="width: 15%;">AULA</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>0413</td>
-              <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
-              <td>Gpo1</td>
-              <td>MARTES</td>
-              <td>10:00 - 11:40</td>
-              <td>E201</td>
-            </tr>
-
-            <tr class="table-light">
-              <td>0413</td>
-              <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
-              <td>Gpo1</td>
-              <td>JUEVES</td>
-              <td>15:00 - 16:40</td>
-              <td>E201</td>
-            </tr>
-
-            <tr>
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo3</td>
-              <td>LUNES</td>
-              <td>08:00 - 09:40</td>
-              <td>D104</td>
-            </tr>
-            
-            <tr class="table-light">
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo3</td>
-              <td>MIERCOLES</td>
-              <td>08:00 - 09:40</td>
-              <td>D104</td>
-            </tr>
-
-            <tr>
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo4</td>
-              <td>LUNES</td>
-              <td>10:00 - 11:40</td>
-              <td>E201</td>
-            </tr>
-            
-            <tr class="table-light">
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo4</td>
-              <td>JUEVES</td>
-              <td>08:00 - 09:40</td>
-              <td>E201</td>
-            </tr>
-
-            <tr>
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo7</td>
-              <td>LUNES</td>
-              <td>03:00 - 04:40</td>
-              <td>D104</td>
-            </tr>
-            
-            <tr class="table-light">
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo7</td>
-              <td>JUEVES</td>
-              <td>01:00 - 02:40</td>
-              <td>D104</td>
-            </tr>
-
-            <tr>
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo8</td>
-              <td>MARTES</td>
-              <td>03:00 - 04:40</td>
-              <td>D104</td>
-            </tr>
-            
-            <tr class="table-light">
-              <td>0402</td>
-              <td>INTRO. INGENIERIA</td>
-              <td>Gpo8</td>
-              <td>MIERCOLES</td>
-              <td>01:00 - 02:40</td>
-              <td>D104</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- ===== VISTA LISTA ===== -->
+      <div id="vista-lista">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped text-center">
+            <thead class="table-dark">
+              <tr>
+                <th style="width: 10%;">CODIGO</th>
+                <th style="width: 30%;">ASIGNATURA</th>
+                <th style="width: 10%;">GRUPO</th>
+                <th style="width: 15%;">DIA</th>
+                <th style="width: 20%;">HORARIO</th>
+                <th style="width: 15%;">AULA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0413</td>
+                <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
+                <td>Gpo1</td>
+                <td>MARTES</td>
+                <td>10:00 - 11:40</td>
+                <td>E201</td>
+              </tr>
+              <tr class="table-light">
+                <td>0413</td>
+                <td class="text-info"><strong>PROGRAMACION WEB</strong></td>
+                <td>Gpo1</td>
+                <td>JUEVES</td>
+                <td>15:00 - 16:40</td>
+                <td>E201</td>
+              </tr>
+              <tr>
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo3</td>
+                <td>LUNES</td>
+                <td>08:00 - 09:40</td>
+                <td>D104</td>
+              </tr>
+              <tr class="table-light">
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo3</td>
+                <td>MIERCOLES</td>
+                <td>08:00 - 09:40</td>
+                <td>D104</td>
+              </tr>
+              <tr>
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo4</td>
+                <td>LUNES</td>
+                <td>10:00 - 11:40</td>
+                <td>E201</td>
+              </tr>
+              <tr class="table-light">
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo4</td>
+                <td>JUEVES</td>
+                <td>08:00 - 09:40</td>
+                <td>E201</td>
+              </tr>
+              <tr>
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo7</td>
+                <td>LUNES</td>
+                <td>03:00 - 04:40</td>
+                <td>D104</td>
+              </tr>
+              <tr class="table-light">
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo7</td>
+                <td>JUEVES</td>
+                <td>01:00 - 02:40</td>
+                <td>D104</td>
+              </tr>
+              <tr>
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo8</td>
+                <td>MARTES</td>
+                <td>03:00 - 04:40</td>
+                <td>D104</td>
+              </tr>
+              <tr class="table-light">
+                <td>0402</td>
+                <td>INTRO. INGENIERIA</td>
+                <td>Gpo8</td>
+                <td>MIERCOLES</td>
+                <td>01:00 - 02:40</td>
+                <td>D104</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      
+
+      <!-- ===== VISTA CALENDARIO ===== -->
+      <div id="vista-calendario" style="display: none;">
+        <div class="table-responsive">
+          <table id="tabla-calendario" class="table table-bordered text-center mb-0"></table>
+        </div>
+      </div>
+
       <hr>
       <div class="text-center mt-4">
         <small class="text-muted">Sistema de Gestión Académica - Derechos Reservados 1999-2005</small>
@@ -174,5 +224,139 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  
+  const materias = [
+    { codigo: "0413", nombre: "PROGRAMACION WEB",   grupo: "Gpo1", dia: "MARTES",    horaInicio: 10, aula: "E201", color: "bg-info text-dark" },
+    { codigo: "0413", nombre: "PROGRAMACION WEB",   grupo: "Gpo1", dia: "JUEVES",    horaInicio: 15, aula: "E201", color: "bg-info text-dark" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo3", dia: "LUNES",     horaInicio: 8,  aula: "D104", color: "bg-success text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo3", dia: "MIERCOLES", horaInicio: 8,  aula: "D104", color: "bg-success text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo4", dia: "LUNES",     horaInicio: 10, aula: "E201", color: "bg-warning text-dark" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo4", dia: "JUEVES",    horaInicio: 8,  aula: "E201", color: "bg-warning text-dark" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo7", dia: "LUNES",     horaInicio: 3,  aula: "D104", color: "bg-danger text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo7", dia: "JUEVES",    horaInicio: 1,  aula: "D104", color: "bg-danger text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo8", dia: "MARTES",    horaInicio: 3,  aula: "D104", color: "bg-secondary text-white" },
+    { codigo: "0402", nombre: "INTRO. INGENIERIA",  grupo: "Gpo8", dia: "MIERCOLES", horaInicio: 1,  aula: "D104", color: "bg-secondary text-white" },
+  ];
+
+  const dias = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES"];
+
+  const todasHoras = materias.map(m => m.horaInicio);
+  const horaMin = Math.min(...todasHoras);
+  const horaMax = Math.max(...todasHoras) + 2;
+
+  function renderizarCalendario() {
+    const tabla = document.getElementById("tabla-calendario");
+    tabla.innerHTML = "";
+
+    const thead = document.createElement("thead");
+    const filaHeader = document.createElement("tr");
+
+    const thVacio = document.createElement("th");
+    thVacio.className = "day-header";
+    thVacio.textContent = "HORA";
+    filaHeader.appendChild(thVacio);
+
+    for (let d = 0; d < dias.length; d++) {
+      const th = document.createElement("th");
+      th.className = "day-header calendar-cell";
+      th.textContent = dias[d];
+      filaHeader.appendChild(th);
+    }
+    thead.appendChild(filaHeader);
+    tabla.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    for (let hora = horaMin; hora <= horaMax; hora++) {
+      const fila = document.createElement("tr");
+
+      const tdHora = document.createElement("td");
+      tdHora.className = "hour-cell";
+      const horaFmt = hora.toString().padStart(2, "0") + ":00";
+      tdHora.textContent = horaFmt;
+      fila.appendChild(tdHora);
+
+      for (let d = 0; d < dias.length; d++) {
+        const tdDia = document.createElement("td");
+        tdDia.className = "calendar-cell";
+        tdDia.style.backgroundColor = "#f8f9fa";
+
+        for (let m = 0; m < materias.length; m++) {
+          const mat = materias[m];
+          if (mat.dia === dias[d] && mat.horaInicio === hora) {
+            const badge = document.createElement("span");
+            badge.className = "materia-badge " + mat.color;
+            badge.innerHTML =
+              "<strong>" + mat.nombre + "</strong><br>" +
+              mat.grupo + " | " + mat.aula + "<br>" +
+              hora.toString().padStart(2,"0") + ":00 - " +
+              (hora + 1).toString().padStart(2,"0") + ":40";
+            tdDia.appendChild(badge);
+          }
+        }
+
+        fila.appendChild(tdDia);
+      }
+
+      tbody.appendChild(fila);
+    }
+
+    tabla.appendChild(tbody);
+  }
+
+  function exportarExcel() {
+    const encabezados = ["CODIGO", "ASIGNATURA", "GRUPO", "DIA", "HORARIO", "AULA"];
+
+    const horarios = [
+      { codigo: "0413", nombre: "PROGRAMACION WEB",  grupo: "Gpo1", dia: "MARTES",    horario: "10:00 - 11:40", aula: "E201" },
+      { codigo: "0413", nombre: "PROGRAMACION WEB",  grupo: "Gpo1", dia: "JUEVES",    horario: "15:00 - 16:40", aula: "E201" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "LUNES",     horario: "08:00 - 09:40", aula: "D104" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "MIERCOLES", horario: "08:00 - 09:40", aula: "D104" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "LUNES",     horario: "10:00 - 11:40", aula: "E201" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "JUEVES",    horario: "08:00 - 09:40", aula: "E201" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "LUNES",     horario: "03:00 - 04:40", aula: "D104" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "JUEVES",    horario: "01:00 - 02:40", aula: "D104" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MARTES",    horario: "03:00 - 04:40", aula: "D104" },
+      { codigo: "0402", nombre: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MIERCOLES", horario: "01:00 - 02:40", aula: "D104" },
+    ];
+
+    let contenido = encabezados.join("\t") + "\n";
+    for (let i = 0; i < horarios.length; i++) {
+      const h = horarios[i];
+      contenido += [h.codigo, h.nombre, h.grupo, h.dia, h.horario, h.aula].join("\t") + "\n";
+    }
+
+    const blob = new Blob(["\uFEFF" + contenido], { type: "application/vnd.ms-excel;charset=utf-8;" });
+    const url  = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href     = url;
+    link.download = "Reporte_Horarios_SIU.xls";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  function mostrarVista(vista) {
+    const listaDiv      = document.getElementById("vista-lista");
+    const calendarioDiv = document.getElementById("vista-calendario");
+    const btnLista      = document.getElementById("btn-lista");
+    const btnCalendario = document.getElementById("btn-calendario");
+
+    if (vista === "lista") {
+      listaDiv.style.display      = "block";
+      calendarioDiv.style.display = "none";
+      btnLista.classList.add("active-view");
+      btnCalendario.classList.remove("active-view");
+    } else {
+      listaDiv.style.display      = "none";
+      calendarioDiv.style.display = "block";
+      btnLista.classList.remove("active-view");
+      btnCalendario.classList.add("active-view");
+      renderizarCalendario(); // Generar calendario al cambiar
+    }
+  }
+</script>
 </body>
 </html>
