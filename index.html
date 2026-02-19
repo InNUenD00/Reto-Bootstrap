@@ -65,7 +65,7 @@
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
           <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
           </svg>
-          Usuario: Ing. A. Cisneros | Período: 2026-I
+          Usuario: Ing. A. Cisneros | Período: 2026 - I
         </small>
       </div>
     </div>
@@ -99,34 +99,45 @@
           </button>
         </div>
         <div class="d-flex gap-2">
-          <button class="btn btn-primary" onclick="window.print()">IMPRIMIR REPORTE</button>
-          <button class="btn btn-success" onclick="exportarExcel()">EXPORTAR A EXCEL</button>
+          <button class="btn btn-danger d-flex align-items-center" onclick="window.print()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer me-2" viewBox="0 0 16 16">
+              <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+              <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+            </svg>
+            IMPRIMIR
+          </button>
+          <button class="btn btn-success d-flex align-items-center" onclick="exportarExcel()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel me-2" viewBox="0 0 16 16">
+              <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+              <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+            </svg>
+            EXPORTAR A EXCEL
+          </button>
         </div>
       </div>
-      <div id="vista-lista">
-        <div class="table-responsive">
-          <table class="table table-hover table-striped text-center">
-            <thead class="table-dark">
-              <tr>
-                <th style="width: 10%;">CODIGO</th>
-                <th style="width: 30%;">ASIGNATURA</th>
-                <th style="width: 10%;">GRUPO</th>
-                <th style="width: 15%;">DIA</th>
-                <th style="width: 20%;">HORARIO</th>
-                <th style="width: 15%;">AULA</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-lista">
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <div id="vista-lista" class="shadow-lg rounded-4 overflow-hidden border-0 my-3">
+  <div class="table-responsive">
+    <table class="table table-hover table-striped text-center align-middle mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th class="py-3" style="width: 10%;">CODIGO</th>
+          <th class="py-3" style="width: 30%;">ASIGNATURA</th>
+          <th class="py-3" style="width: 10%;">GRUPO</th>
+          <th class="py-3" style="width: 15%;">DIA</th>
+          <th class="py-3" style="width: 20%;">HORARIO</th>
+          <th class="py-3" style="width: 15%;">AULA</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-lista" class="bg-white">
+        </tbody>
+    </table>
+  </div>
+</div>
       <div id="vista-calendario" style="display: none;">
         <div class="table-responsive">
           <table id="tabla-calendario" class="table table-bordered text-center mb-0"></table>
         </div>
       </div>
-
       <hr>
       <div class="text-center mt-4">
         <small class="text-muted">Sistema de Gestión Académica - Derechos Reservados 1999-2005</small>
@@ -170,16 +181,20 @@
   function renderizarLista() {
     const tbody = document.getElementById("tbody-lista");
     tbody.innerHTML = "";
+    
     materias.forEach((m, i) => {
       const tr = document.createElement("tr");
       if (i % 2 !== 0) tr.className = "table-light";
+      const estiloOvalo = "border-radius: 20px; padding: 4px 12px; display: inline-block; font-weight: bold;";
+
       tr.innerHTML =
-        "<td>" + m.codigo + "</td>" +
+        "<td><span style='" + estiloOvalo + " background-color: #FFD700; color: #000;'>" + m.codigo + "</span></td>" +
         "<td class='text-info'><strong>" + m.nombre + "</strong></td>" +
-        "<td>" + m.grupo + "</td>" +
-        "<td>" + m.dia + "</td>" +
-        "<td>" + horarioCompleto(m.horaInicio) + "</td>" +
-        "<td>" + m.aula + "</td>";
+        "<td><span style='" + estiloOvalo + " background-color: #198754; color: #fff;'>" + m.grupo + "</span></td>" +
+        "<td><span style='" + estiloOvalo + " background-color: #6f42c1; color: #fff;'>" + m.dia + "</span></td>" +
+        "<td><span style='" + estiloOvalo + " background-color: #dc3545; color: #fff;'>" + horarioCompleto(m.horaInicio) + "</span></td>" +
+        "<td><span style='" + estiloOvalo + " background-color: #0d6efd; color: #fff;'>" + m.aula + "</span></td>";
+        
       tbody.appendChild(tr);
     });
   }
